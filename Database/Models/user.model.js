@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import bcrypt from 'bcrypt';
 
 const table = new mongoose.Schema({
     name: {
@@ -31,11 +31,31 @@ const table = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['user', 'admin'],
+        enum: ['user', 'admin', 'super admin'],
         default: 'user'
-    }
+    },
+    passwordLatestChangeTime: Date,
+    wishlist: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'products'
+    }],
+    addresses: [{
+        street: String,
+        phone: String,
+        city: String
+    }]
 
 }, { timestamps: true });
+
+table.pre('save', function () {
+    this.password = bcrypt.hashSync(this.password, 8);
+});
+
+table.pre(['findOneAndUpdate', 'findByIdAndUpdate'], function () {
+    if (this._update.password) {
+        this._update.password = bcrypt.hashSync(this._update.password, 8);
+    }
+});
 
 
 export const userModel = mongoose.model('users', table);

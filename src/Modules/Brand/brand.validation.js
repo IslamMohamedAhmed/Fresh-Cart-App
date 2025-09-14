@@ -1,8 +1,8 @@
 import joi from "joi";
 
-const validateAddCategory = joi.object({
+const validateAddBrand = joi.object({
     name: joi.string().required().min(2).max(100).trim(),
-    image: joi.object({
+    logo: joi.object({
         fieldname: joi.string().required(),
         originalname: joi.string().required(),
         encoding: joi.string().required(),
@@ -14,10 +14,10 @@ const validateAddCategory = joi.object({
     }).required()
 }).unknown(true);
 
-const validateUpdateCategory = joi.object({
+const validateUpdateBrand = joi.object({
     name: joi.string().min(2).max(100).trim(),
     id: joi.string().required().length(24).hex(),
-    image: joi.object({
+    logo: joi.object({
         fieldname: joi.string().required(),
         originalname: joi.string().required(),
         encoding: joi.string().required(),
@@ -31,12 +31,14 @@ const validateUpdateCategory = joi.object({
 
 const validateParamsId = joi.object({
     id: joi.string().required().length(24).hex()
-});
+}).unknown(true);
+
+
 
 
 
 export {
-    validateAddCategory,
-    validateUpdateCategory,
-    validateParamsId
+    validateAddBrand,
+    validateUpdateBrand,
+    validateParamsId,
 }

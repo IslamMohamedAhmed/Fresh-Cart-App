@@ -1,6 +1,6 @@
 import multer from "multer";
 import { v4 as uuid } from 'uuid';
-import { appError } from "../../utils/appError.js";
+import { appError } from "../../Utils/appError.js";
 
 export const uploadImages = (path) => {
     const storage = multer.diskStorage({

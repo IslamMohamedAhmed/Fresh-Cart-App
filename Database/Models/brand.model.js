@@ -21,5 +21,8 @@ const table = new mongoose.Schema({
     }
 }, { timestamps: true });
 
+table.post('init', (doc) => {
+    doc.logo = process.env.BASE_URL + "/brands/logos/" + doc.logo;
+});
 
 export const brandModel = mongoose.model('brands', table);

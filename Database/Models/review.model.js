@@ -8,10 +8,6 @@ const table = new mongoose.Schema({
         required: [true, "review text is required!!"],
         minLength: [2, "too short text for a review"]
     },
-    user: {
-        type: mongoose.Types.ObjectId,
-        ref: 'users'
-    },
     product: {
         type: mongoose.Types.ObjectId,
         ref: 'products'
@@ -27,6 +23,11 @@ const table = new mongoose.Schema({
         ref: 'users'
     }
 }, { timestamps: true });
+
+
+table.pre(/^find$/, function () {
+    this.populate('createdBy', "name");
+});
 
 
 export const reviewModel = mongoose.model('reviews', table);

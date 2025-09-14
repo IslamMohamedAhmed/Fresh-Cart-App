@@ -55,7 +55,8 @@ const table = new mongoose.Schema({
     },
     category: {
         type: mongoose.Types.ObjectId,
-        ref: 'categories'
+        ref: 'categories',
+
     },
     subCategory: {
         type: mongoose.Types.ObjectId,
@@ -69,7 +70,20 @@ const table = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'users'
     }
-}, { timestamps: true });
+}, { timestamps: true, toJSON: { virtuals: true } });
 
+table.virtual('productReviews', {
+    ref: 'reviews',
+    localField: '_id',
+    foreignField: 'product'
+});
+table.pre('findOne', function () {
+    this.populate('productReviews','text -product');
+});
+
+table.post('init', (doc) => {
+    doc.imageCover = process.env.BASE_URL + "/products/images/" + doc.imageCover;
+    doc.images = doc.images.map(img => process.env.BASE_URL + "/products/images/" + img);
+});
 
 export const productModel = mongoose.model('products', table);
