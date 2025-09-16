@@ -5,7 +5,8 @@ const table = new mongoose.Schema({
     code: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        unique: true
     },
     expiresAt: Date,
     discount: {

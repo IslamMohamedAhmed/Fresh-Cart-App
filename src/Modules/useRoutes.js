@@ -9,6 +9,7 @@ import reviewRouter from './Review/review.routes.js';
 import { invalidPathHandler } from '../Middlewares/invalidPathHandler.js';
 import { globalErrorHandler } from '../Middlewares/globalErrorHandler.js';
 import wishlistRouter from './Wishlist/wishlist.routes.js';
+import addressRouter from './Address/Address.routes.js';
 export const useRoutes = (app) => {
     app.use('/api/v1/categories/images', express.static('uploads/categories/images'));
     app.use('/api/v1/brands/logos', express.static('uploads/brands/logos'));
@@ -21,6 +22,7 @@ export const useRoutes = (app) => {
     app.use('/api/v1/users', userRouter);
     app.use('/api/v1/reviews', reviewRouter);
     app.use('/api/v1/wishlists', wishlistRouter);
+    app.use('/api/v1/addresses', addressRouter);
     app.use(invalidPathHandler);
     app.use(globalErrorHandler);
 
