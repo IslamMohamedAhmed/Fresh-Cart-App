@@ -12,8 +12,8 @@ const table = new mongoose.Schema({
     discount: {
         type: Number,
         required: true
-    }
-    , createdBy: {
+    },
+    createdBy: {
         type: mongoose.Types.ObjectId,
         ref: 'users'
     }
@@ -21,3 +21,6 @@ const table = new mongoose.Schema({
 
 
 export const couponModel = mongoose.model('coupons', table);
+
+
+

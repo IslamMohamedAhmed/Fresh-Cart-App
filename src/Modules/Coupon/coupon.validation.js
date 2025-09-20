@@ -1,14 +1,14 @@
 import joi from "joi";
 
-const validateAddSubCategory = joi.object({
-    name: joi.string().required().min(2).max(100).trim(),
-    category: joi.string().required().length(24).hex(),
+const validateAddCoupon = joi.object({
+    code: joi.string().required().min(2).max(100).trim(),
+    expiresAt: joi.required(),
+    discount: joi.number().min(0).max(100).required().options({ convert: false })
 }).unknown(true);
 
-const validateUpdateSubCategory = joi.object({
-    name: joi.string().min(2).max(100).trim(),
-    id: joi.string().required().length(24).hex(),
-    category: joi.string().length(24).hex(),
+const validateUpdateCoupon = joi.object({
+    code: joi.string().min(2).max(100).trim(),
+    discount: joi.number().min(0).max(100).options({ convert: false })
 }).unknown(true);
 
 const validateParamsId = joi.object({
@@ -16,9 +16,10 @@ const validateParamsId = joi.object({
 }).unknown(true);
 
 
-
 export {
-    validateAddSubCategory,
-    validateUpdateSubCategory,
-    validateParamsId,
+    validateAddCoupon,
+    validateUpdateCoupon,
+    validateParamsId
 }
+
+

@@ -1,31 +1,24 @@
 import express from "express";
 import { validateInputs } from "../../Middlewares/validateInputs.js";
-import { addSubCategory, deleteSubCategory, getAllSubCategories, getSingleSubCategory, updateSubCategory } from "./coupon.controller.js";
-import { validateAddSubCategory, validateParamsId, validateUpdateSubCategory } from "./coupon.validation.js";
-import productRouter from "../Product/product.routes.js";
-import { subCategoryModel } from "../../../Database/Models/subCategory.model.js";
-import { categoryModel } from "../../../Database/Models/category.model.js";
 import { findById } from "../../Middlewares/findById.js";
 import { validateToken } from "../../Middlewares/validateToken.js";
 import { givePermissionTo } from "../../Middlewares/givePermissionTo.js";
+import { userModel } from "../../../Database/Models/user.model.js";
+import userRouter from "../User/user.routes.js";
+import { addCoupon, deleteCoupon, getAllCoupons, getSingleCoupon, updateCoupon } from "./coupon.controller.js";
+import { validateAddCoupon, validateParamsId, validateUpdateCoupon } from "./coupon.validation.js";
+import { couponModel } from "../../../Database/Models/coupon.model.js";
 
-const subCategoryRouter = express.Router({ mergeParams: true });
+const couponRouter = express.Router({ mergeParams: true });
 
-subCategoryRouter.use('/:subcategory/products', findById({ model: subCategoryModel, foreignKey: 'subcategory', from: 'params', necessary: true, objectName: 'subcategory' })
-    , productRouter);
-subCategoryRouter.route('/').get(getAllSubCategories).post(validateToken, givePermissionTo('admin', 'super admin'),
-    validateInputs(validateAddSubCategory),
-    findById({ model: categoryModel, foreignKey: 'category', from: 'body', necessary: true, objectName: 'category' }), addSubCategory);
-subCategoryRouter.route('/:id').delete(validateToken, givePermissionTo('admin', 'super admin'),
-    validateInputs(validateParamsId),
-    findById({ model: subCategoryModel, foreignKey: 'id', from: 'params', necessary: true, objectName: 'subcategory' }), deleteSubCategory)
+couponRouter.use('/:user/products', findById({ model: userModel, foreignKey: 'user', from: 'params', necessary: true, objectName: 'user' })
+    , userRouter);
+couponRouter.route('/').get(getAllCoupons).post(validateToken, givePermissionTo('admin', 'super admin'),
+    validateInputs(validateAddCoupon), addCoupon);
+couponRouter.route('/:id').delete(validateToken, givePermissionTo('admin', 'super admin'),
+    validateInputs(validateParamsId), findById({ model: couponModel, foreignKey: 'id', from: 'params', necessary: true, objectName: 'coupon' }), deleteCoupon)
     .put(validateToken, givePermissionTo('admin', 'super admin'),
-        validateInputs(validateUpdateSubCategory),
-        findById({ model: subCategoryModel, foreignKey: 'id', from: 'params', necessary: true, objectName: 'subcategory' }),
-        findById({ model: categoryModel, foreignKey: 'category', from: 'body', necessary: false, objectName: 'category' }), updateSubCategory)
-    .get(validateInputs(validateParamsId),
-        findById({ model: subCategoryModel, foreignKey: 'id', from: 'params', necessary: true, objectName: 'subcategory' }), getSingleSubCategory);
+        validateInputs(validateUpdateCoupon), findById({ model: couponModel, foreignKey: 'id', from: 'params', necessary: true, objectName: 'coupon' }), updateCoupon)
+    .get(validateInputs(validateParamsId), findById({ model: couponModel, foreignKey: 'id', from: 'params', necessary: true, objectName: 'coupon' }), getSingleCoupon);
 
-export default subCategoryRouter;
-
-
+export default couponRouter;
