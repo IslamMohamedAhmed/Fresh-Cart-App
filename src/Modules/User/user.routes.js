@@ -11,6 +11,7 @@ import { givePermissionTo } from "../../Middlewares/givePermissionTo.js";
 import { findById } from "../../Middlewares/findById.js";
 import { userModel } from "../../../Database/Models/user.model.js";
 import reviewRouter from "../Review/review.routes.js";
+import orderRouter from "../Order/order.routes.js";
 
 const userRouter = express.Router();
 userRouter.use(validateToken);
@@ -20,6 +21,7 @@ userRouter.use('/:user/categories', findById({ model: userModel, foreignKey: 'us
 userRouter.use('/:user/sub-categories', findById({ model: userModel, foreignKey: 'user', from: 'params', necessary: true }), subCategoryRouter);
 userRouter.use('/:user/brands', findById({ model: userModel, foreignKey: 'user', from: 'params', necessary: true }), brandRouter);
 userRouter.use('/:user/reviews', findById({ model: userModel, foreignKey: 'user', from: 'params', necessary: true, objectName: 'user' }), reviewRouter);
+userRouter.use('/:user/orders', findById({ model: userModel, foreignKey: 'user', from: 'params', necessary: true, objectName: 'user' }), orderRouter);
 userRouter.route('/').get(getAllUsers).post(validateInputs(validateAddUser), addUser);
 userRouter.route('/:id').delete(validateInputs(validateParamsId), findById({ model: userModel, foreignKey: 'id', from: 'params', necessary: true }), deleteUser)
     .put(validateInputs(validateUpdateUser), findById({ model: userModel, foreignKey: 'id', from: 'params', necessary: true }), updateUser)

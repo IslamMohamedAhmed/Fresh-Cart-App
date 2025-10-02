@@ -12,6 +12,7 @@ import wishlistRouter from './Wishlist/wishlist.routes.js';
 import addressRouter from './Address/Address.routes.js';
 import couponRouter from './Coupon/coupon.routes.js';
 import cartRouter from './Cart/cart.routes.js';
+import orderRouter from './Order/order.routes.js';
 export const useRoutes = (app) => {
     app.use('/api/v1/categories/images', express.static('uploads/categories/images'));
     app.use('/api/v1/brands/logos', express.static('uploads/brands/logos'));
@@ -27,6 +28,7 @@ export const useRoutes = (app) => {
     app.use('/api/v1/addresses', addressRouter);
     app.use('/api/v1/coupons', couponRouter);
     app.use('/api/v1/carts', cartRouter);
+    app.use('/api/v1/orders', orderRouter);
     app.use(invalidPathHandler);
     app.use(globalErrorHandler);
 

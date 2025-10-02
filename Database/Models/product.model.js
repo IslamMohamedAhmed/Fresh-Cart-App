@@ -34,8 +34,7 @@ const table = new mongoose.Schema({
     },
     priceAfterDiscount: {
         type: Number,
-        min: 0,
-        required: true,
+        min: 0
     },
     quantity: {
         type: Number,

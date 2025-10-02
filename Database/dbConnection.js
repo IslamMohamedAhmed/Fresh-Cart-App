@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 export function connectDb() {
     try {
-        mongoose.connect('mongodb://127.0.0.1:27017/FreshCartApp');
+        mongoose.connect('mongodb+srv://NanoRules:ZTFj54G78jusruu@cluster0.uk9amxm.mongodb.net/FreshCartApp');
         console.log('connection is successful!');
     }
     catch (err) {

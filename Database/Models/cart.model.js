@@ -12,7 +12,10 @@ const table = new mongoose.Schema({
                 type: mongoose.Types.ObjectId,
                 ref: 'products'
             },
-            quantity: Number,
+            quantity: {
+                type: Number,
+                default: 1
+            },
             price: Number
         }
     ],
